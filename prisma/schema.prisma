@@ -1,0 +1,25 @@
+generator client {
+provider = "prisma-client-js"
+}
+
+datasource db {
+provider = "postgresql"
+url = env("DATABASE_URL")
+}
+
+model Job {
+id String @id @default(uuid())
+source String // 'JobStreet' atau 'Glints'
+job_title String
+company_name String
+location String?
+salary_range String?
+job_type String? // 'Full Time', 'Contract', 'Remote', dll
+experience_level String?
+company_url String?
+job_detail_url String @unique // Jadikan unik agar tidak ada duplikasi
+description String? @db.Text
+is_active Boolean @default(true)
+created_at DateTime @default(now()) // Memperbaiki typo created_out menjadi created_at
+updated_at DateTime @updatedAt
+}
