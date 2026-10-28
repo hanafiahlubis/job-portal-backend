@@ -13,7 +13,7 @@ const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const TARGET_URL = "https://www.permatabank.com/karir/";
 
 const scrapePermata = async (customUrl = TARGET_URL) => {
-    if (!customUrl || customUrl === "https://www.permatabank.com/karir/") {
+    if (!customUrl || customUrl !== "https://www.permatabank.com/karir/") {
         console.error(`[Permata Bank] Error: Silakan tempelkan URL target pada bagian TARGET_URL: ${TARGET_URL} terlebih dahulu.`);
         return;
     }

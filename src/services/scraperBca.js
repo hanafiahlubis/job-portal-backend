@@ -13,7 +13,7 @@ const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const TARGET_URL = "https://karir.bca.co.id/candidate/id/career";
 
 const scrapeBca = async (customUrl = TARGET_URL) => {
-    if (!customUrl || customUrl === "https://karir.bca.co.id/candidate/id/career") {
+    if (!customUrl || customUrl !== "https://karir.bca.co.id/candidate/id/career") {
         console.error(`[BCA] Error: Silakan tempelkan URL target pada bagian TARGET_URL: ${TARGET_URL} terlebih dahulu.`);
         return;
     }

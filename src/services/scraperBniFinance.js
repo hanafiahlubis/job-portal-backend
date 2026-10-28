@@ -13,7 +13,7 @@ const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const TARGET_URL = "https://www.bnifinance.co.id/informasi-karir";
 
 const scrapeBniFinance = async (customUrl = TARGET_URL) => {
-    if (!customUrl || customUrl === "https://www.bnifinance.co.id/informasi-karir") {
+    if (!customUrl || customUrl !== "https://www.bnifinance.co.id/informasi-karir") {
         console.error(`[BNI Finance] Error: Silakan tempelkan URL target pada bagian TARGET_URL: ${TARGET_URL} terlebih dahulu.`);
         return;
     }

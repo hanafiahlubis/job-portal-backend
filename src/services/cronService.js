@@ -5,6 +5,10 @@ const scrapeCimbNiaga = require('./scraperCimbNiaga');
 const scrapeBca = require('./scraperBca');
 const scrapeBniFinance = require('./scraperBniFinance');
 const scrapePermata = require('./scraperPermata');
+const scrapeLinkedin = require('./scraperLinkedin');
+const scrapeSeaBank = require('./scraperSeaBank');
+const scrapeBsi = require('./scraperBsi');
+const scrapeSuperbank = require('./scraperSuperbank');
 const prisma = require('../utils/db');
 
 const runCleanup = async () => {
@@ -29,6 +33,10 @@ const runAllScrapers = async () => {
     await scrapeBca();
     await scrapeBniFinance();
     await scrapePermata();
+    await scrapeLinkedin();
+    await scrapeSeaBank();
+    await scrapeBsi();
+    await scrapeSuperbank();
     await runCleanup();
 };
 
@@ -54,5 +62,9 @@ module.exports = {
     scrapeBca,
     scrapeBniFinance,
     scrapePermata,
+    scrapeLinkedin,
+    scrapeSeaBank,
+    scrapeBsi,
+    scrapeSuperbank,
     runCleanup
 };

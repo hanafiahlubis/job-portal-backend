@@ -2,14 +2,20 @@ const prisma = require('../utils/db');
 
 exports.getJobs = async (req, res) => {
     try {
-        const { search, location, min_salary, page = 1, limit = 10 } = req.query;
-        const skip = (page - 1) * limit;
+        // Default pagination: limit = 50 per halaman
+        const { search, location, min_salary, page = 1, limit = 50 } = req.query;
+        const pageNum = Math.max(1, parseInt(page, 10) || 1);
+        const limitNum = Math.max(1, parseInt(limit, 10) || 50);
+        const skip = (pageNum - 1) * limitNum;
 
         // Membangun kondisi filter (Dynamic Query)
         const whereClause = { is_active: true };
 
         if (search) {
-            whereClause.job_title = { contains: search, mode: 'insensitive' };
+            whereClause.OR = [
+                { job_title: { contains: search, mode: 'insensitive' } },
+                { company_name: { contains: search, mode: 'insensitive' } }
+            ];
         }
         if (location) {
             whereClause.location = { contains: location, mode: 'insensitive' };
@@ -20,8 +26,8 @@ exports.getJobs = async (req, res) => {
 
         const jobs = await prisma.job.findMany({
             where: whereClause,
-            skip: parseInt(skip),
-            take: parseInt(limit),
+            skip: skip,
+            take: limitNum,
             orderBy: { updated_at: 'desc' }
         });
 
@@ -32,8 +38,9 @@ exports.getJobs = async (req, res) => {
             data: jobs,
             meta: {
                 total_items: totalItems,
-                current_page: parseInt(page),
-                total_pages: Math.ceil(totalItems / limit)
+                current_page: pageNum,
+                limit: limitNum,
+                total_pages: Math.ceil(totalItems / limitNum) || 1
             }
         });
     } catch (error) {

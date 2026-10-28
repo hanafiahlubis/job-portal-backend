@@ -13,7 +13,7 @@ const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const TARGET_URL = "https://career.cimbniaga.co.id/jobs";
 
 const scrapeCimbNiaga = async (customUrl = TARGET_URL) => {
-    if (!customUrl || customUrl === "https://career.cimbniaga.co.id/jobs") {
+    if (!customUrl || customUrl !== "https://career.cimbniaga.co.id/jobs") {
         console.error(`[CIMB Niaga] Error: Silakan tempelkan URL target pada bagian TARGET_URL: ${TARGET_URL} terlebih dahulu.`);
         return;
     }
