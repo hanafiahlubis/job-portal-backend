@@ -45,10 +45,23 @@ app.use(express.json());
 app.use('/api/jobs', jobRoutes);
 app.use('/api/scraper', scraperRoutes);
 
-// Menjalankan Cron Job Automation
-startCron();
-
-app.listen(PORT, () => {
-    console.log(`🚀 Server berjalan di http://localhost:${PORT}`);
-    console.log(`🔒 CORS Origin yang diizinkan: ${corsOriginEnv}`);
+// Health check endpoint
+app.get('/', (req, res) => {
+    res.json({
+        status: 'ok',
+        message: 'Job Portal API is running',
+        timestamp: new Date().toISOString()
+    });
 });
+
+// Menjalankan Cron Job Automation & Listener (Hanya jika dijalankan langsung di server lokal/VPS, bukan di serverless Vercel)
+if (!process.env.VERCEL) {
+    startCron();
+    app.listen(PORT, () => {
+        console.log(`🚀 Server berjalan di http://localhost:${PORT}`);
+        console.log(`🔒 CORS Origin yang diizinkan: ${corsOriginEnv}`);
+    });
+}
+
+// Export aplikasi untuk Vercel Serverless Function
+module.exports = app;
